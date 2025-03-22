@@ -1,8 +1,15 @@
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+import httpx
 
 app = FastAPI()
 
-@app.get("/")
-def root():
-    return JSONResponse({"message": "Bitcoin Analyzer API is running!"})
+@app.get("/analysis")
+async def analyze():
+    url = "https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT"
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+        data = response.json()
+    return {
+        "current_price": data["lastPrice"],
+        "price_change_percent": data["priceChangePercent"]
+    }
