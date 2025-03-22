@@ -1,0 +1,11 @@
+app = "bitcoin-api-backend"
+primary_region = "cdg"
+
+[env]
+PORT = "8000"
+
+[experimental]
+auto_rollback = true
+
+[build]
+  builder = "heroku/buildpacks:20"
